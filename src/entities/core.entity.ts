@@ -8,9 +8,11 @@ import {
 @Entity()
 export class CoreEntity {
   @CreateDateColumn({ name: "created_at" })
-  createdAt;
+  createdAt: Date;
+
   @UpdateDateColumn({ name: "updated_at", nullable: true })
-  updatedAt;
+  updatedAt: Date;
+
   @DeleteDateColumn({ name: "deleted_at", nullable: true })
-  deletedAt;
+  deletedAt: Date;
 }
