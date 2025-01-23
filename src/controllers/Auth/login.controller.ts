@@ -7,21 +7,22 @@ import httpStatus from "http-status";
 const loginHandler = async (req, res) => {
   const { email, password } = req.body;
 
-  const findUser = await userService.getOneUser({ email });
-  if (!findUser) {
+  const user = await userService.getOneUser({ email });
+  // console.log("user :>> ", user);
+  if (!user) {
     return null;
   }
 
-  if (findUser.deletedAt) {
+  if (user.deletedAt) {
     return null;
   }
 
-  const compare = await comparePassword(password, findUser.password);
+  const compare = await comparePassword(password, user.password);
   if (!compare) {
     return null;
   }
 
-  const token = generateToken(findUser.uuid);
+  const token = generateToken(user.uuid);
   res.json({ token }).status(httpStatus.ACCEPTED);
 };
 

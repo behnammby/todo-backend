@@ -19,11 +19,16 @@ export const checkAuth = async (
     }
 
     const { secretKey } = Env;
+
     const token = authHeader.replace("Bearer ", "");
+    // console.log("token :>> ", token);
 
-    const { id } = jwt.verify(token, secretKey) as PayloadType;
+    const payload = jwt.verify(token, secretKey);
+    console.log("payload :>> ", payload);
 
-    const user = await userService.getOneUser({ id });
+    const { uuid } = payload as PayloadType;
+
+    const user = await userService.getOneUser({ uuid });
     if (!user) {
       throw new UnauthorizedError("User not found");
     }
