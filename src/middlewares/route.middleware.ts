@@ -11,7 +11,12 @@ export const routeMiddleware = async (
   next: NextFunction
 ) => {
   if (req.path !== "/health") {
-    const data = validateIp(req.ip) ? await clientInspector(req) : "Invalid IP";
+    let data = {};
+    // Avoid checking Ip address when in development
+    if (process.env.DEVELOPMENT !== "true") {
+      data = validateIp(req.ip) ? await clientInspector(req) : "Invalid IP";
+    }
+
     Logger.group({
       title: "New Request",
       descriptions: [
