@@ -1,4 +1,10 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from "typeorm";
 import { CoreEntity } from "./core.entity";
 import { UserEntity } from "./user.entity";
 
@@ -40,12 +46,13 @@ export class TaskEntity extends CoreEntity {
   @Column({ type: "text", nullable: false })
   description: string;
 
-  @Column()
+  @Column({ name: "due_date" })
   dueDate: Date;
 
   @Column({ type: "enum", enum: TaskStatus, default: TaskStatus.Pending })
   status: TaskStatus;
 
   @ManyToOne(() => UserEntity, (user) => user.tasks)
+  @JoinColumn({ name: "user_uuid" })
   user: UserEntity;
 }

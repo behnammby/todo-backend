@@ -24,10 +24,10 @@ export const createTaskValidator = () => {
       .withMessage(
         "Status must be one of 'Pending', 'InProgress', or 'Completed'."
       ),
-    body("userId")
-      .exists()
-      .withMessage("User ID is required.")
-      .isUUID()
-      .withMessage("User ID must be a valid UUID."),
+    // body("userId")
+    //   .exists()
+    //   .withMessage("User ID is required.")
+    //   .isUUID()
+    //   .withMessage("User ID must be a valid UUID."),
   ];
 };

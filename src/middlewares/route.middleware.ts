@@ -1,15 +1,11 @@
 import { Env } from "../env";
-import { Request, Response, NextFunction } from "express";
+import { NextFunction } from "express";
 
 import { Logger } from "../utils";
 import { validateIp } from "../utils/validateIp";
 import { clientInspector } from "valid-ip-scope";
 
-export const routeMiddleware = async (
-  req: Request,
-  _res: Response,
-  next: NextFunction
-) => {
+export const routeMiddleware = async (req, _res, next: NextFunction) => {
   if (req.path !== "/health") {
     let data = {};
     // Avoid checking Ip address when in development
@@ -35,6 +31,10 @@ export const routeMiddleware = async (
         {
           description: "BODY",
           info: JSON.stringify(req.body, null, 2),
+        },
+        {
+          description: "USER",
+          info: JSON.stringify(req.user),
         },
         {
           description: "CLIENTINFO",

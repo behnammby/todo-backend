@@ -1,15 +1,13 @@
-import { TaskEntity } from "../entities";
+import { TaskEntity, UserEntity } from "../entities";
 import { AppDataSource } from "../db";
 
 /**
  * This operation allows you to create a new task.
  */
 export const createTask = async (
-  data: Omit<
-    TaskEntity,
-    "uuid" | "createdAt" | "deletedAt" | "updatedAt" | "user"
-  >
+  data: Omit<TaskEntity, "uuid" | "createdAt" | "deletedAt" | "updatedAt">
 ) => {
+  console.log("data :>> ", JSON.stringify(data));
   const taskRepository = AppDataSource.getRepository(TaskEntity);
 
   const task = taskRepository.create({ ...data });
