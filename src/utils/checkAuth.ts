@@ -28,7 +28,8 @@ export const checkAuth = async (
       throw new UnauthorizedError("User not found");
     }
 
-    req.user = { ...user };
+    // Avoid exposing password checksum
+    req.user = { ...user, password: null };
 
     next();
   } catch (error) {

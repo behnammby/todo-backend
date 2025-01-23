@@ -16,11 +16,9 @@ export const updateTaskValidator = () => {
       .optional()
       .isISO8601()
       .withMessage("Due date must be a valid date."),
-    body("status")
+    body("completed")
       .optional()
-      .isIn(["Pending", "InProgress", "Completed"]) // Assuming these are the possible statuses
-      .withMessage(
-        "Status must be one of 'Pending', 'InProgress', or 'Completed'."
-      ),
+      .isBoolean()
+      .withMessage("Completed must be true or false"),
   ];
 };

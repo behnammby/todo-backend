@@ -7,7 +7,6 @@ import { AppDataSource } from "../db";
 export const createTask = async (
   data: Omit<TaskEntity, "uuid" | "createdAt" | "deletedAt" | "updatedAt">
 ) => {
-  console.log("data :>> ", JSON.stringify(data));
   const taskRepository = AppDataSource.getRepository(TaskEntity);
 
   const task = taskRepository.create({ ...data });
@@ -19,9 +18,12 @@ export const createTask = async (
 /**
  * These operation allows you to retrieve tasks by ID.
  */
-export const getTaskById = async (uuid: string) => {
+export const getTaskById = async (uuid: string, user: UserEntity) => {
   const taskRepository = AppDataSource.getRepository(TaskEntity);
-  const task = await taskRepository.findOneBy({ uuid });
+  const task = await taskRepository.findOneBy({
+    uuid,
+    user: { uuid: user.uuid },
+  });
 
   if (!task) {
     throw new Error("Task not found");
@@ -33,9 +35,12 @@ export const getTaskById = async (uuid: string) => {
 /**
  * These operation allows you to retrieve all tasks
  */
-export const getAllTasks = async () => {
+export const getAllTasks = async (user: UserEntity) => {
   const taskRepository = AppDataSource.getRepository(TaskEntity);
-  const tasks = await taskRepository.find();
+
+  const tasks = await taskRepository.find({
+    where: { user: { uuid: user.uuid } },
+  });
 
   return tasks;
 };
@@ -46,11 +51,17 @@ export const getAllTasks = async () => {
 export const updateTask = async (
   uuid: string,
   data: Partial<
-    Omit<TaskEntity, "uuid" | "createdAt" | "deletedAt" | "updatedAt" | "user">
-  >
+    Omit<TaskEntity, "uuid" | "createdAt" | "deletedAt" | "updatedAt">
+  >,
+  user: UserEntity
 ) => {
   const taskRepository = AppDataSource.getRepository(TaskEntity);
-  const task = await taskRepository.findOneBy({ uuid });
+  const task = await taskRepository.findOneBy({
+    uuid,
+    user: {
+      uuid: user.uuid,
+    },
+  });
 
   if (!task) {
     throw new Error("Task not found");
@@ -66,9 +77,12 @@ export const updateTask = async (
 /**
  * This operation deletes a task by its ID.
  */
-export const deleteTask = async (uuid: string) => {
+export const deleteTask = async (uuid: string, user: UserEntity) => {
   const taskRepository = AppDataSource.getRepository(TaskEntity);
-  const task = await taskRepository.findOneBy({ uuid });
+  const task = await taskRepository.findOneBy({
+    uuid,
+    user: { uuid: user.uuid },
+  });
 
   if (!task) {
     throw new Error("Task not found");

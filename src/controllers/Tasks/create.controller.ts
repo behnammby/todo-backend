@@ -7,7 +7,7 @@ const createTaskHandler = async (req, res) => {
   const taskData = req.body;
   const task = await createTask({ ...taskData, user: req.user as UserEntity });
 
-  res.status(httpStatus.CREATED).json({ task });
+  res.status(httpStatus.CREATED).json({ ...task, user: undefined });
 };
 
 export const createTaskController = errorHandlerWrapper(createTaskHandler);

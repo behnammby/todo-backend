@@ -18,12 +18,10 @@ export const createTaskValidator = () => {
       .withMessage("Due date is required.")
       .isISO8601()
       .withMessage("Due date must be a valid date."),
-    body("status")
+    body("completed")
       .optional()
-      .isIn(["Pending", "InProgress", "Completed"]) // Assuming these are the possible statuses
-      .withMessage(
-        "Status must be one of 'Pending', 'InProgress', or 'Completed'."
-      ),
+      .isBoolean() // Assuming these are the possible statuses
+      .withMessage("Completed must be true or false."),
     // body("userId")
     //   .exists()
     //   .withMessage("User ID is required.")
