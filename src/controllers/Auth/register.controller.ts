@@ -14,9 +14,9 @@ const registerHandler = async (req, res) => {
   if (!user) {
     // console.log("user :>> ", user);
     res.status(httpStatus.BAD_REQUEST);
-  } else {
-    res.json({ user }).status(httpStatus.CREATED);
+    return null;
   }
+  res.json({ user }).status(httpStatus.CREATED);
 };
 
 export const registerController = errorHandlerWrapper(registerHandler);

@@ -10,19 +10,20 @@ const loginHandler = async (req, res) => {
   const user = await userService.getOneUser({ email });
   // console.log("user :>> ", user);
   if (!user) {
+    res.status(httpStatus.FORBIDDEN);
     return null;
   }
 
   if (user.deletedAt) {
+    res.status(httpStatus.FORBIDDEN);
+
     return null;
   }
 
   const compare = await comparePassword(password, user.password);
   if (!compare) {
-    // return null;
-
-    res
-      .status(httpStatus.FORBIDDEN);
+    res.status(httpStatus.FORBIDDEN);
+    return null;
   }
 
   const token = generateToken(user.uuid);
