@@ -45,13 +45,15 @@ yarn install
 ### Configure Environment Variables
 Create a `.env` file in the root directory and add the following variables:
 ```env
-PORT=5000
-JWT_SECRET=<your_jwt_secret>
+DB_TYPE=mysql
 DB_HOST=<database_host>
-DB_PORT=<database_port>
 DB_USERNAME=<database_username>
-DB_PASSWORD=<database_password>
+DB_PASSWORD=database_password
+DB_PORT=3306
 DB_NAME=<database_name>
+PORT=8000
+SECRET_KEY=<your_jwt_secret>
+EXPIRE_TIME=3600
 ```
 Replace `<your_jwt_secret>` and database connection details with your actual values.
 
@@ -60,7 +62,7 @@ To start the development server, run:
 ```bash
 yarn dev
 ```
-The server will start on `http://localhost:5000`.
+The server will start on `http://localhost:8000`.
 
 ### API Endpoints
 
