@@ -23,7 +23,9 @@ const loginHandler = async (req, res) => {
   }
 
   const token = generateToken(user.uuid);
-  res.json({ token }).status(httpStatus.ACCEPTED);
+  res
+    .json({ token, username: user.username, email: user.email })
+    .status(httpStatus.ACCEPTED);
 };
 
 export const loginController = errorHandlerWrapper(loginHandler);
