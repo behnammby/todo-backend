@@ -40,6 +40,9 @@ export const getAllTasks = async (user: UserEntity) => {
 
   const tasks = await taskRepository.find({
     where: { user: { uuid: user.uuid } },
+    order: {
+      createdAt: "desc",
+    },
   });
 
   return tasks;
