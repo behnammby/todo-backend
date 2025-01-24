@@ -11,7 +11,12 @@ const registerHandler = async (req, res) => {
     email,
     password: hashPassword,
   });
-  res.json({ user }).status(httpStatus.CREATED);
+  if (!user) {
+    // console.log("user :>> ", user);
+    res.status(httpStatus.BAD_REQUEST);
+  } else {
+    res.json({ user }).status(httpStatus.CREATED);
+  }
 };
 
 export const registerController = errorHandlerWrapper(registerHandler);

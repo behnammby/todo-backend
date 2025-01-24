@@ -19,7 +19,10 @@ const loginHandler = async (req, res) => {
 
   const compare = await comparePassword(password, user.password);
   if (!compare) {
-    return null;
+    // return null;
+
+    res
+      .status(httpStatus.FORBIDDEN);
   }
 
   const token = generateToken(user.uuid);
