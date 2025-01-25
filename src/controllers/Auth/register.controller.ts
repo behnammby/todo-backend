@@ -12,8 +12,7 @@ const registerHandler = async (req, res) => {
     password: hashPassword,
   });
   if (!user) {
-    // console.log("user :>> ", user);
-    res.status(httpStatus.BAD_REQUEST);
+    res.status(httpStatus.BAD_REQUEST).send();
     return null;
   }
   res.json({ user }).status(httpStatus.CREATED);
