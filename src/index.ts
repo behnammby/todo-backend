@@ -23,13 +23,13 @@ const setupServer = async () => {
 
   app.use(clientUse());
 
+  app.use("/api/health", (_req, res) => {
+    res.json({ msg: "Hello Get Zell" });
+  });
+
   app.use(authMiddleware);
 
   app.use(routeMiddleware);
-
-  app.use("/health", (_req, res) => {
-    res.json({ msg: "Hello Get Zell" });
-  });
 
   app.use("/api/v1", appRouter);
 
